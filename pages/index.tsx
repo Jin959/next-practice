@@ -1,7 +1,12 @@
+import { useState } from "react";
+
 export default function Home() {
+    const [counter, setCounter] = useState(0);
   return (
     <div>
-        <h1>HI!</h1>
+        <h1>HI! {counter}</h1>
+        {/* <button onClick={() => setCounter(counter + 1)}>+</button> */}
+        <button onClick={() => setCounter(prev => prev + 1)}>+</button>
     </div>
   );
 }
