@@ -29,4 +29,9 @@ $ npx create-next-app@latest
 
 ```
 
+## Page
 
+- 페이지의 경로는 pages 내부의 파일명으로 지정된다. 컴포넌트 명은 경로에 영향 없음.
+- index.js 와 같은 몇가지 예약 파일명이 존재.
+- CRA 프로젝트처럼 React 라이브러리를 명시적으로 import 하지 않아도 JSX 문법을 사용할 수 있다.
+    - 하지만, React hooks를 사용하고 싶다면 import 해주어야한다.
