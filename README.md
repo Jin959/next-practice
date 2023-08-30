@@ -29,6 +29,14 @@ $ npx create-next-app@latest
 
 ```
 
+## 실행
+
+개발 환경 실행
+
+```
+npm run dev
+```
+
 ## Page
 
 - 페이지의 경로는 pages 내부의 파일명으로 지정된다. 컴포넌트 명은 경로에 영향 없음.
@@ -68,3 +76,17 @@ Hydration 과정
 3. 그리고 얼마후 React.js 가 로딩 되면 이미 존재하는 것들과 연결되어 리액트앱으로서 동작한다.
 
 - 자바스크립트를 차단하거나 지원하지 않는 브라우저에서는 당연히 React로의 전환이 이루어지지 않아서 React Hook 들과 같은 기능이 정상적으로 동작하지는 않는다.
+
+## Link
+React Router 의 Link 와 같이 anchor 태그 `<a href ="">` 대신 사용하는 컴포넌트가 Next에도 ["next/link"의 Link](https://nextjs.org/docs/pages/api-reference/components/link) 가 제공 된다.
+- `<a>` 태그의 문제점은 클릭 될때마다 웹 페이지를 서버에서 다시 요청하고 웹 페이지를 다시 렌더링한다는 데에 있다.
+- next/link 의 Link 컴포넌트를 사용하면 `<a>` 태그와 달리 페이지 리로드가 필요없다.
+
+
+## Hooks
+
+### useRouter
+useRouter Hook 을 사용하면 asPath, back, basePath 등과 같은 Path 정보들을 활용할 수 있다.
+```typescript
+const router = useRouter();
+```
