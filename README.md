@@ -1,5 +1,7 @@
 # Introduction to NextJS
 
+- 해당 학습은 Page Router 방식으로 진행함.
+
 리액트는 라이브러리이고 넥스트는 리액트를 이용하는 프로젝트의 Best Practice를 유도하는 프레임워크이다.
 
 - 하나의 예시로 CRA 로 만든 React 앱은 index.js 의 root 렌더링 코드를 확인 할 수 있지만 CNA 로 만든 Next 앱은 프레임워크 내부에서 동작하며 우리의 코드를 호출한다.
@@ -7,6 +9,23 @@
 ```javascript
 const root = ReactDOM.createRoot(document.getElementById("root"));
 ```
+
+---
+- [프로젝트 세팅](#프로젝트-세팅)
+- [실행](#실행)
+- [Page](#page)
+- [SSG ; Static Site Generation](#ssg)
+- [Hydration](#hydration)
+- [Routing](#routing)
+    - [Link](#link)
+    - [useRouter](#userouter)
+- [Styled JSX](#styled-jsx)
+    - [Global Styles](#global-styles)
+- [App Component](#app-component)
+    - [컴포넌트 호출 과정](#컴포넌트-호출-과정)
+    - [styles/globals.css](#styles/globals.css)
+
+---
 
 ## 프로젝트 세팅
 
@@ -41,7 +60,10 @@ npm run dev
 
 ## Page
 
-- 페이지의 경로는 pages 내부의 파일명으로 지정된다. 컴포넌트 명은 경로에 영향 없음.
+[Pages and Layouts](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts)
+
+- Page는 Next.js 에서 React Component 이다.
+- 페이지의 URI는 pages 내부의 파일명으로 지정된다. 컴포넌트 명은 경로에 영향 없음.
 - index.js 와 같은 몇가지 예약 파일명이 존재.
 - CRA 프로젝트처럼 React 라이브러리를 명시적으로 import 하지 않아도 JSX 문법을 사용할 수 있다.
   - 하지만, React hooks를 사용하고 싶다면 import 해주어야한다.
@@ -53,8 +75,9 @@ Next.js의 특징 중 하나는 정적 사이트 생성 기능(SSG : Static Site
 - Next 앱의 페이지들이 미리 렌더링 된다.
 - [JAMstack](https://jamstack.org/generators/) 사이트를 보면 여러 정적 생성 도구 들(Static Site Generators)을 비교해 놓았다.
 
-CRA(Create React App)로 만든 리액트 앱은 기본적으로 CSR(Client Side Render)을 한다.
-모든 마크업 언어가 생성되어 오는 것이 아니라 index.html 만을 가져온다. Client 브라우저가 JS 코드를 받아온 다음에 브라우저 상에서 실행되어 렌더링된다. (Client Side의 JS 코드가 모든 뷰를 생성하는 것이다.)
+**CRA(Create React App)로 만든 리액트 앱**은 기본적으로 CSR(Client Side Render)을 한다.  
+모든 마크업 언어가 생성되어 오는 것이 아니라 index.html 만을 가져온다.  
+Client 브라우저가 JS 코드를 받아온 다음에 브라우저 상에서 실행되어 렌더링된다. (Client Side의 JS 코드가 모든 뷰를 생성하는 것이다.)
 
 - 그래서 브라우저 설정에서 JavaScript 를 차단하면 index.html의 noscript 태그내부의 다음 문구가 보인다.
   ```html
@@ -62,9 +85,11 @@ CRA(Create React App)로 만든 리액트 앱은 기본적으로 CSR(Client Side
   ```
 - 원활하지 않은 네트워크 환경에서 CSR인 리액트앱을 요청하면, 모든 React.js 코드, 자바스크립트 코드를 가져와야 UI 가 렌더링 되기 때문에 처음에 빈 화면 (White Screen) 만 보일 수도 있다.
 
-반면, Next 앱은 Client 브라우저가 JS 코드를 받아오는 것이 아니다. Static Pre Rendering 되어 온다. 즉, 실제 우리가 작성한 자바스크립트 코드로 Render 된 마크업 언어가 오게 된다.
+반면, **Next 앱**은 Client 브라우저가 JS 코드를 받아오는 것이 아니다.  
+Static Pre Rendering 되어 온다. 즉, 실제 우리가 작성한 자바스크립트 코드로 Render 된 마크업 언어가 오게 된다.
 
-따라서 자바스크립트를 지원하지 않는 브라우저에서도, 원할 하지 않는 네트워크 환경에서도 Pre Render 된 UI 가 바로 보인다. 오는 데 느릴 수는 있게지만 차곡 차곡 온 UI 는 보이게 된다.
+따라서 자바스크립트를 지원하지 않는 브라우저에서도, 원할 하지 않는 네트워크 환경에서도 Pre Render 된 UI 가 바로 보인다.  
+오는 데 느릴 수는 있게지만 차곡 차곡 온 UI 는 보이게 된다.
 
 ## Hydration
 
@@ -102,11 +127,79 @@ const router = useRouter();
 Vercel 의 CSS-in-JS 인 Styled JSX.
 CNA 에서 별도의 설치 없이 사용 가능하다.
 
-- CSS 모듈처럼 고유한 해시값으로 된 클래스네임을 적용한다.
-  설정한 스타일은 설정한 자리의 컴포넌트에 적용된다. (자식 컴포넌트 설정 -> 부모에 또 설정 : 각자 설정 가능)
+- CSS 모듈처럼 고유한 해시값으로 된 클래스네임을 적용한다.  
+  설정한 스타일은 Scoped(한정되어 작용)되어 설정한 자리의 컴포넌트에만 적용된다.  
+  (자식 컴포넌트 설정 -> 부모에 또 설정 : 각자 설정 가능)  
   클래스도 마찬가지이다. 설정한 컴포넌트 내부의 것만 스타일이 적용
-- 확실 하진 않지만, styled-JSX 에서 css 구문을 작성할때, 자식 컴포넌트를 먼저 작성해야 적용된다.
+- 확실하진 않지만, styled-JSX 에서 css 구문을 작성할때, 자식 컴포넌트를 먼저 작성해야 적용된다.
 - [블로그 소개글](https://nextjs.org/blog/styling-next-with-styled-jsx)
 - [깃헙 레포](https://github.com/vercel/styled-jsx)
 
-## Hooks
+### Global Styles
+
+Styled-JSX 에서 다음과 같이 글로벌 설정을 할 수 있다.
+page 라우팅 방식을 사용한다면, 해당 글로벌 설정은 해당 page에 한하여 적용된다.
+
+```typescript
+export default function Home() {
+  return (
+    <div>
+      <NavBar />
+      <h1>HI!</h1>
+      <style jsx global>{`
+         {
+          /*글로벌 설정*/
+        }
+        a {
+          background-color: white;
+        }
+      `}</style>
+    </div>
+  );
+}
+```
+
+
+## App Component
+
+웹 어플리케이션 전역에서 Auth 처럼 공통적인 기능이나 네비게이션 바와 같이 공통적인 View 를 만들 필요가 있을때, App Component 를 커스터마이징 하면된다.
+
+- [CustomApp](https://nextjs.org/docs/pages/building-your-application/routing/custom-app)
+
+Next.js 는 page 들을 초기화 할때, App Component 를 사용한다. 보통 Next.js 에서 따로 설정하지 않아도 기본 App 컴포넌트를 사용한다.
+
+커스터마이징을 하려면 `pages/_app.tsx` 파일을 만들어 설정한다.
+
+Next.js 는 다른 것을 렌더링 하기 전에 `_app.tsx` 를 먼저 렌더링한다.
+
+
+기본 App 컴포넌트 대략 다음과 같음. 이걸 만지작 거려 바꾸면 커스텀 임.
+
+```typescript
+import type { AppProps } from "next/app";
+
+export default function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
+}
+```
+
+**Compopnent**: 활성 된 (사용 중) 인 페이지를 가리킨다. 페이지가 라우팅 되어 바뀔때 마다 **Compopnent** 가 참조하는 것이 바뀐다.
+
+**pageProps**: **Compopnent** 에게 Pre-loading 시킬 Props 들이다.
+
+### 컴포넌트 호출 과정
+
+1. `pages/` 내의 어떤 페이지 컴포넌트를 호출함. 
+
+2. 호출한 페이지 컴포넌트를 App 컴포넌트에 **Compopnent** Prop 으로 전달함.
+
+3. App 컴포넌트에서 **Compopnent**를 활용한 return 문으로 렌더링
+
+
+### styles/globals.css
+
+`globals.css` 는 처음 CNA 프로젝트를 파면 생기는 건데,
+
+보통 page 컴포넌트에서는 일반 css 파일을 import 할 수 없다. page는 css 모듈만 import 할 수 있다.
+
+하지만 [App Component](#app-component-and-app-page) 에서는 할 수 있다.
