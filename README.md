@@ -203,3 +203,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 보통 page 컴포넌트에서는 일반 css 파일을 import 할 수 없다. page는 css 모듈만 import 할 수 있다.
 
 하지만 [App Component](#app-component-and-app-page) 에서는 할 수 있다.
+
+## 제공되는 컴포넌트
+
+Next.js 에서는 기본적으로 [컴포넌트 몇 가지](https://nextjs.org/docs/pages/api-reference/components)를 제공한다.
+
+- next/head
+
