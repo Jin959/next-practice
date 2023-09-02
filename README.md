@@ -23,7 +23,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
     - [Global Styles](#global-styles)
 - [App Component](#app-component)
     - [컴포넌트 호출 과정](#컴포넌트-호출-과정)
-    - [styles/globals.css](#styles/globals.css)
+    - [styles/globals.css](#globals-css)
 
 ---
 
@@ -196,9 +196,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 3. App 컴포넌트에서 **Compopnent**를 활용한 return 문으로 렌더링
 
 
-### styles/globals.css
+### globals css
 
-`globals.css` 는 처음 CNA 프로젝트를 파면 생기는 건데,
+`styles/globals.css` 는 처음 CNA 프로젝트를 파면 생기는 건데,
 
 보통 page 컴포넌트에서는 일반 css 파일을 import 할 수 없다. page는 css 모듈만 import 할 수 있다.
 
