@@ -24,6 +24,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 - [App Component](#app-component)
     - [컴포넌트 호출 과정](#컴포넌트-호출-과정)
     - [styles/globals.css](#globals-css)
+- [API Fetching](#api-fetching)
+    - [넥스트 설정 next.config.js](#넥스트-설정-next-configuration)
+
 
 ---
 
@@ -210,3 +213,20 @@ Next.js 에서는 기본적으로 [컴포넌트 몇 가지](https://nextjs.org/d
 
 - next/head
 
+
+## API Fetching
+
+### 넥스트 설정 Next Configuration
+
+- [next.config.js Options](https://nextjs.org/docs/pages/api-reference/next-config-js)
+
+**[Redirects](https://nextjs.org/docs/pages/api-reference/next-config-js/redirects)**
+
+Next.js에서 리다이렉션 설정을 할 수 있다.  
+`permanent` 옵션은 HTTP 상태 307/308 에 대한 옵션이다.
+
+도메인에 대한 변경 등에 활용할 수 있을듯.
+
+**[Rewrites](https://nextjs.org/docs/pages/api-reference/next-config-js/rewrites)**
+
+`rewrites`는 일종의 proxy URL 로서 **[Redirects](https://nextjs.org/docs/pages/api-reference/next-config-js/redirects)**와는 다르게 변경 된 경로가 보이지 않는다.

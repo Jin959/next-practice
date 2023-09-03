@@ -9,12 +9,6 @@ const Layout = ({ children }: ChildrenProps) => {
     <>
       <NavBar />
       <div>{children}</div>      
-      <style jsx global>{`
-        div {
-          text-align: center;
-          font-size: 200%;
-        }
-      `}</style>
     </>
   );
 };
