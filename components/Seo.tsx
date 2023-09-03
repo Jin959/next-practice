@@ -5,9 +5,10 @@ interface SeoProps {
 }
 
 const Seo = ({title}: SeoProps) => {
+    const titleMessage = `${title} | Next 푸드`;
     return (
         <Head>
-            <title>{title} | Next 무비즈</title>
+            <title>{titleMessage}</title>
         </Head>
     )
 }
