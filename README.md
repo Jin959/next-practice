@@ -22,6 +22,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
   - [useRouter](#userouter)
   - [중첩 라우팅](#중첩-라우팅)
   - [동적 라우팅](#동적-라우팅)
+  - [동적 라우팅 URL에 직접 접근하면 생기는 일](#동적-라우팅-URL에-직접접근)
 - [Styled JSX](#styled-jsx)
   - [Global Styles](#global-styles)
 - [App Component](#app-component)
@@ -168,16 +169,25 @@ pages
 1. [`<Link>` 를 타면 된다.](https://github.com/Jin959/next-practice/blob/master/pages/index.tsx#L50-L60)
 2. [아니면 useRouter Hook을 사용](https://github.com/Jin959/next-practice/blob/master/pages/index.tsx#L28-L38)
 
-객체 대신 path 만으로 넘길 수도 있다.
+객체 대신 path 만으로 넘길 수도 있다. useRouter 는 후속처리를 하기에 유용.
+
 ```typescript
 const onClick = (id: number) => {
- router.push(`/restaurants/${id}`);
+  router.push(`/restaurants/${id}`);
 };
 ```
 
-useRouter 는 후속처리를 하기에 유용.
+URL을 자유롭게 사용하고 싶다면, [Catch-all Segments](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments)
 
-- URL을 자유롭게 사용하고 싶다면, [Catch-all Segments](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments))
+### 동적 라우팅 URL에 직접접근
+
+incognito 모드로 서비스 플로우를 따르지 않고, 주소창에 직접 동적 라우팅 URL 에 접근하면 Router에는 이전 정보가 저장된 적이 없어 잘 작동하지 않는다.
+
+- Router는 CSR 기술이다. Client에서 동작한다.
+
+그리고 Client 에서 가져온 정보만 활용할 수 있다. 이때, 이 동적 라우팅을 SSR 해서 SEO 하는데 사용 할 수도 있다. [getServerSideProps](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props#getserversideprops-return-values), [getStaticProps, getStaticPaths](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-blocking)를 이용하면 된다.
+
+
 
 ## Styled JSX
 

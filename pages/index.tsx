@@ -26,15 +26,7 @@ export default function Home({
 }: InferGetServerSidePropsType<GetServerSideProps>) {
   const router = useRouter();
   const onClick = (id: number, restaurant: string) => {
-    router.push(
-      {
-        pathname: `/restaurants/${id}`,
-        query: {
-          restaurant: restaurant,
-        },
-      },
-      `/restaurants/${id}`
-    );
+    router.push(`/restaurants/${restaurant}/${id}`);
   };
   return (
     <div className="container">
@@ -48,13 +40,7 @@ export default function Home({
           <img src={food["음식이미지(URL)"]} />
           <h4>
             <Link
-              href={{
-                pathname: `/restaurants/${food["음식이미지(ID)"]}`,
-                query: {
-                  restaurant: food["식당명"],
-                },
-              }}
-              as={`/restaurants/${food["음식이미지(ID)"]}`}
+              href={`/restaurants/${food["식당명"]}/${food["음식이미지(ID)"]}`}
             >
               {food["식당명"]}
             </Link>
