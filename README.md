@@ -113,7 +113,7 @@ Hydration 과정
 
 ## Routing
 
-[Linking and Routing](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating)
+[Linking and Navigatinging](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating)
 
 ### Link
 
@@ -165,16 +165,19 @@ pages
 
 생성한 뒤에
 
-1. [`<Link>` 를 타면 된다.](https://github.com/Jin959/next-practice/blob/master/pages/index.tsx#L42-L44)
-2. [아니면 useRouter Hook을 사용](https://github.com/Jin959/next-practice/blob/master/pages/index.tsx#L28-L31)
-   객체 대신 path 만으로 넘길 수도 있다.
-   ```typescript
-   const onClick = (id: number) => {
-     router.push(`/restaurants/${id}`);
-   };
-   ```
+1. [`<Link>` 를 타면 된다.](https://github.com/Jin959/next-practice/blob/master/pages/index.tsx#L50-L60)
+2. [아니면 useRouter Hook을 사용](https://github.com/Jin959/next-practice/blob/master/pages/index.tsx#L28-L38)
 
-useRouter 는 후속처리를 하기에 유용
+객체 대신 path 만으로 넘길 수도 있다.
+```typescript
+const onClick = (id: number) => {
+ router.push(`/restaurants/${id}`);
+};
+```
+
+useRouter 는 후속처리를 하기에 유용.
+
+- URL을 자유롭게 사용하고 싶다면, [Catch-all Segments](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments))
 
 ## Styled JSX
 
