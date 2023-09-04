@@ -24,8 +24,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 - [App Component](#app-component)
     - [컴포넌트 호출 과정](#컴포넌트-호출-과정)
     - [styles/globals.css](#globals-css)
-- [API Fetching](#api-fetching)
+- [Client Side API Fetching](#client-side-api-fetching)
     - [넥스트 설정 next.config.js](#넥스트-설정-next-configuration)
+    - [API 은닉](#-api-은닉)
+- [Server Side Rendering](#server-side-rendering)
+    - [Data Fetching - GetServerSideProps](#data-fetching)
 
 
 ---
@@ -214,7 +217,9 @@ Next.js 에서는 기본적으로 [컴포넌트 몇 가지](https://nextjs.org/d
 - next/head
 
 
-## API Fetching
+## Client Side API Fetching
+
+- [Client Side Fetching](https://nextjs.org/docs/pages/building-your-application/data-fetching/client-side)
 
 ### 넥스트 설정 Next Configuration
 
@@ -230,3 +235,27 @@ Next.js에서 리다이렉션 설정을 할 수 있다.
 **[Rewrites](https://nextjs.org/docs/pages/api-reference/next-config-js/rewrites)**
 
 `rewrites`는 일종의 proxy URL 로서 **[Redirects](https://nextjs.org/docs/pages/api-reference/next-config-js/redirects)**와는 다르게 변경 된 경로가 보이지 않는다.
+
+### API 은닉
+
+- [next.config.js](https://github.com/Jin959/next-practice/blob/897fa8fb1fc36ad350da68f5722c20efac13ec98/next.config.js)
+- [pages/index.js](https://github.com/Jin959/next-practice/blob/897fa8fb1fc36ad350da68f5722c20efac13ec98/pages/index.tsx)
+
+
+## Server Side Rendering
+
+다음 명령어로 빌드한 뒤, 빌드 결과물을 보면 SSR이 어떻게 일어나는지 알 수 있다.
+```
+next build
+```
+
+### Data Fetching
+
+- [pages/index.js](https://github.com/Jin959/next-practice/blob/master/pages/index.tsx)
+
+**[GetServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props)**
+
+Backend 에서만 일어나는 것을 다룬다.  
+여기서 일어나는 일들은 Client 가 확인 할 수 없다.
+
+리액트로의 전환에서 \<script id="\_\_NEXT_DATA\_\_"\> 를 통해 자료를 넘겨준다.

@@ -1,6 +1,6 @@
 import NavBar from "./NavBar";
 
-export interface ChildrenProps {
+interface ChildrenProps {
   children: React.ReactNode;
 }
 

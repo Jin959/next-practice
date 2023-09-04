@@ -1,21 +1,31 @@
-import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
+import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 
-export default function Home() {
-  const [foodArray, setFoodArray] = useState([]);
-  useEffect(() => {
-    (async () => {
-      const response = await fetch("/api/foods/uddi:1e5a6f2e-3f79-49bd-819b-d17541e6df78"); // Promise 객체
-      const { data } = await response.json();
-      setFoodArray(data);
-    })();
-  }, []);
+interface Food {
+  "메뉴(ID)": number;
+  "식당(ID)": number;
+  식당명: string;
+  "음식이미지(ID)": number;
+  "음식이미지(URL)": string;
+  지역명: string;
+}
 
+interface Data {
+  page: number;
+  perPage: number;
+  totalCount: number;
+  currentCount: number;
+  matchCount: number;
+  data: Array<Food>;
+}
+
+export default function Home({
+  data,
+}: InferGetServerSidePropsType<GetServerSideProps>) {
   return (
     <div className="container">
       <Seo title="Home"></Seo>
-      {!foodArray && <h4>Loading...</h4>}
-      {foodArray?.map((food) => (
+      {data?.map((food: Food) => (
         <div key={food["음식이미지(ID)"]} className="food">
           <img src={food["음식이미지(URL)"]} />
           <h4>{food["식당명"]}</h4>
@@ -45,3 +55,18 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<{
+  data: Data;
+}> = async () => {
+  const response = await fetch(
+    "http://localhost:3000/api/foods/uddi:1e5a6f2e-3f79-49bd-819b-d17541e6df78"
+  ); // Promise 객체
+  const { data } = await response.json();
+
+  return {
+    props: {
+      data,
+    },
+  };
+};
