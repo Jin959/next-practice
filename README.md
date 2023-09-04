@@ -11,25 +11,27 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 ```
 
 ---
+
 - [프로젝트 세팅](#프로젝트-세팅)
 - [실행](#실행)
 - [Page](#page)
 - [SSG ; Static Site Generation](#ssg)
 - [Hydration](#hydration)
 - [Routing](#routing)
-    - [Link](#link)
-    - [useRouter](#userouter)
+  - [Link](#link)
+  - [useRouter](#userouter)
+  - [중첩 라우팅](#중첩-라우팅)
+  - [동적 라우팅](#동적-라우팅)
 - [Styled JSX](#styled-jsx)
-    - [Global Styles](#global-styles)
+  - [Global Styles](#global-styles)
 - [App Component](#app-component)
-    - [컴포넌트 호출 과정](#컴포넌트-호출-과정)
-    - [styles/globals.css](#globals-css)
+  - [컴포넌트 호출 과정](#컴포넌트-호출-과정)
+  - [styles/globals.css](#globals-css)
 - [Client Side API Fetching](#client-side-api-fetching)
-    - [넥스트 설정 next.config.js](#넥스트-설정-next-configuration)
-    - [API 은닉](#-api-은닉)
+  - [넥스트 설정 next.config.js](#넥스트-설정-next-configuration)
+  - [API 은닉](#-api-은닉)
 - [Server Side Rendering](#server-side-rendering)
-    - [Data Fetching - GetServerSideProps](#data-fetching)
-
+  - [Data Fetching - GetServerSideProps](#data-fetching)
 
 ---
 
@@ -122,11 +124,57 @@ React Router 의 Link 와 같이 anchor 태그 `<a href ="">` 대신 사용하�
 
 ### useRouter
 
-useRouter Hook 을 사용하면 asPath, back, basePath 등과 같은 Path 정보들을 활용할 수 있다.
+[useRouter Hook](https://nextjs.org/docs/pages/api-reference/functions/use-router) 을 사용하면 asPath, back, basePath 등과 같은 Path 정보들을 활용할 수 있다.
 
 ```typescript
 const router = useRouter();
 ```
+
+### 중첩 라우팅
+
+- [Nested Routes](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts#nested-routes)
+
+`pages/restaurants`은 `pages/restaurants/index`로, `pages/restaurants/all`는 `pages/restaurants/all` 로 방문할 수 있다.
+
+```
+pages
+|   about.tsx
+|   index.tsx
+|   _app.tsx
+|
+\---restaurants
+        all.tsx
+        index.tsx
+```
+
+### 동적 라우팅
+
+- [Dynamic Routing](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes)
+
+`/restaurants/12356` 의 URL 로 방문할 수 있다.
+
+```
+pages
+|   about.tsx
+|   index.tsx
+|   _app.tsx
+|
+\---restaurants
+        [id].tsx
+```
+
+생성한 뒤에
+
+1. [`<Link>` 를 타면 된다.](https://github.com/Jin959/next-practice/blob/master/pages/index.tsx#L42-L44)
+2. [아니면 useRouter Hook을 사용](https://github.com/Jin959/next-practice/blob/master/pages/index.tsx#L28-L31)
+   객체 대신 path 만으로 넘길 수도 있다.
+   ```typescript
+   const onClick = (id: number) => {
+     router.push(`/restaurants/${id}`);
+   };
+   ```
+
+useRouter 는 후속처리를 하기에 유용
 
 ## Styled JSX
 
@@ -165,7 +213,6 @@ export default function Home() {
 }
 ```
 
-
 ## App Component
 
 웹 어플리케이션 전역에서 Auth 처럼 공통적인 기능이나 네비게이션 바와 같이 공통적인 View 를 만들 필요가 있을때, App Component 를 커스터마이징 하면된다.
@@ -177,7 +224,6 @@ Next.js 는 page 들을 초기화 할때, App Component 를 사용한다. 보통
 커스터마이징을 하려면 `pages/_app.tsx` 파일을 만들어 설정한다.
 
 Next.js 는 다른 것을 렌더링 하기 전에 `_app.tsx` 를 먼저 렌더링한다.
-
 
 기본 App 컴포넌트 대략 다음과 같음. 이걸 만지작 거려 바꾸면 커스텀 임.
 
@@ -195,12 +241,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 ### 컴포넌트 호출 과정
 
-1. `pages/` 내의 어떤 페이지 컴포넌트를 호출함. 
+1. `pages/` 내의 어떤 페이지 컴포넌트를 호출함.
 
 2. 호출한 페이지 컴포넌트를 App 컴포넌트에 **Compopnent** Prop 으로 전달함.
 
 3. App 컴포넌트에서 **Compopnent**를 활용한 return 문으로 렌더링
-
 
 ### globals css
 
@@ -215,7 +260,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 Next.js 에서는 기본적으로 [컴포넌트 몇 가지](https://nextjs.org/docs/pages/api-reference/components)를 제공한다.
 
 - next/head
-
 
 ## Client Side API Fetching
 
@@ -241,10 +285,10 @@ Next.js에서 리다이렉션 설정을 할 수 있다.
 - [next.config.js](https://github.com/Jin959/next-practice/blob/897fa8fb1fc36ad350da68f5722c20efac13ec98/next.config.js)
 - [pages/index.js](https://github.com/Jin959/next-practice/blob/897fa8fb1fc36ad350da68f5722c20efac13ec98/pages/index.tsx)
 
-
 ## Server Side Rendering
 
 다음 명령어로 빌드한 뒤, 빌드 결과물을 보면 SSR이 어떻게 일어나는지 알 수 있다.
+
 ```
 next build
 ```

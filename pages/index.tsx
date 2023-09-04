@@ -1,5 +1,7 @@
+import Link from "next/link";
 import Seo from "../components/Seo";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 
 interface Food {
   "메뉴(ID)": number;
@@ -22,13 +24,41 @@ interface Data {
 export default function Home({
   data,
 }: InferGetServerSidePropsType<GetServerSideProps>) {
+  const router = useRouter();
+  const onClick = (id: number, restaurant: string) => {
+    router.push(
+      {
+        pathname: `/restaurants/${id}`,
+        query: {
+          restaurant: restaurant,
+        },
+      },
+      `/restaurants/${id}`
+    );
+  };
   return (
     <div className="container">
       <Seo title="Home"></Seo>
       {data?.map((food: Food) => (
-        <div key={food["음식이미지(ID)"]} className="food">
+        <div
+          key={food["음식이미지(ID)"]}
+          className="food"
+          onClick={() => onClick(food["음식이미지(ID)"], food["식당명"])}
+        >
           <img src={food["음식이미지(URL)"]} />
-          <h4>{food["식당명"]}</h4>
+          <h4>
+            <Link
+              href={{
+                pathname: `/restaurants/${food["음식이미지(ID)"]}`,
+                query: {
+                  restaurant: food["식당명"],
+                },
+              }}
+              as={`/restaurants/${food["음식이미지(ID)"]}`}
+            >
+              {food["식당명"]}
+            </Link>
+          </h4>
         </div>
       ))}
       <style jsx>{`
